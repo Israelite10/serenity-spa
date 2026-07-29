@@ -11,7 +11,7 @@ const clerkConfigured = rawKey.length > 0 && !rawKey.includes("xxxx");
 export default clerkConfigured
   ? clerkMiddleware(async (auth, req) => {
       if (isAdminRoute(req)) {
-        await auth.protect();
+        await (await auth()).protect();
       }
     })
   : (req: NextRequest) => {
