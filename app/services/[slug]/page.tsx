@@ -2,14 +2,15 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Clock, Check } from "lucide-react";
 import { services, getServiceBySlug } from "@/lib/services-data";
-import { formatPrice } from "@/lib/utils";
+import { formatPrice, formatDuration } from "@/lib/utils";
 
 export function generateStaticParams() {
   return services.map((s) => ({ slug: s.slug }));
 }
 
-export function generateMetadata({ params }: { params: { slug: string } }) {
-  const service = getServiceBySlug(params.slug);
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const service = getServiceBySlug(slug);
   if (!service) return {};
   return {
     title: service.name,
@@ -17,8 +18,9 @@ export function generateMetadata({ params }: { params: { slug: string } }) {
   };
 }
 
-export default function ServiceDetailPage({ params }: { params: { slug: string } }) {
-  const service = getServiceBySlug(params.slug);
+export default async function ServiceDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const service = getServiceBySlug(slug);
   if (!service) notFound();
 
   return (
@@ -31,7 +33,7 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
         <div>
           <h1 className="font-display text-3xl font-medium sm:text-4xl">{service.name}</h1>
           <div className="mt-3 flex items-center gap-4 text-sm text-mist">
-            <span className="flex items-center gap-1.5"><Clock className="h-4 w-4" /> {service.durationMin} minutes</span>
+            <span className="flex items-center gap-1.5"><Clock className="h-4 w-4" /> {formatDuration(service.durationMin)}</span>
             <span className="font-display text-xl text-gold">{formatPrice(service.priceCents)}</span>
           </div>
 
