@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #0B0B0B;
+  color: #FFFFFF;
+}
+
+::selection {
+  background: #D4AF37;
+  color: #0B0B0B;
+}
+
+/* Glass panel used across cards */
+.glass {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(212, 175, 55, 0.15);
+}
+
+.gold-divider {
+  height: 1px;
+  width: 64px;
+  background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+}
+
+.text-gradient-gold {
+  background: linear-gradient(135deg, #E8CE7A 0%, #D4AF37 50%, #9C7B25 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #0B0B0B;
+}
+::-webkit-scrollbar-thumb {
+  background: #7A5C33;
+  border-radius: 999px;
+}
+
+/* Duotone treatment applied to all placeholder photography so it reads
+   as "luxury spa" regardless of the underlying stock image. Remove this
+   class once real branded photography is swapped in via lib/images.ts */
+.spa-photo {
+  filter: grayscale(45%) sepia(15%) saturate(140%) brightness(0.75) contrast(1.05);
+}
+
+/* Visible keyboard focus for accessibility */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid #D4AF37;
+  outline-offset: 3px;
+}
